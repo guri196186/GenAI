@@ -11,33 +11,35 @@
 
 
 import os
-import openai
+from openai import OpenAI
 from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv(find_dotenv()) # read local .env file
 
-openai.api_key  = os.getenv('OPENAI_API_KEY')
+client = OpenAI(
+  api_key=os.environ['OPENAI_API_KEY'],  # this is also the default, it can be omitted
+)
 
 
 # In[ ]:
 
 
-def get_completion(prompt, model="gpt-3.5-turbo"):
-    messages = [{"role": "user", "content": prompt}]
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=messages,
-        temperature=0, # this is the degree of randomness of the model's output
-    )
-    return response.choices[0].message["content"]
+# def get_completion(prompt, model="gpt-3.5-turbo"):
+#     messages = [{"role": "user", "content": prompt}]
+#     response = client.chat.completions.create(
+#         model=model,
+#         messages=messages,
+#         temperature=0, # this is the degree of randomness of the model's output
+#     )
+#     return response.choices[0].message.content
 
 def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0):
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model=model,
         messages=messages,
         temperature=temperature, # this is the degree of randomness of the model's output
     )
 #     print(str(response.choices[0].message))
-    return response.choices[0].message["content"]
+    return response.choices[0].message.content
 
 
 # In[ ]:
@@ -77,6 +79,7 @@ response = get_completion_from_messages(messages, temperature=1)
 print(response)
 
 
+#Order Bot 
 # In[ ]:
 
 
@@ -105,7 +108,7 @@ def collect_messages(_):
     panels.append(
         pn.Row('User:', pn.pane.Markdown(prompt, width=600)))
     panels.append(
-        pn.Row('Assistant:', pn.pane.Markdown(response, width=600, style={'background-color': '#F6F6F6'})))
+        pn.Row('Assistant:', pn.pane.Markdown(response, width=600)))
  
     return pn.Column(*panels)
 
@@ -146,6 +149,11 @@ Drinks: \
 coke 3.00, 2.00, 1.00 \
 sprite 3.00, 2.00, 1.00 \
 bottled water 5.00 \
+
+the three prices for pizza and drinks correspond to large, medium and small. \
+the toppings and fries price is independent of size. \
+different pizzas have different toppings available. \ 
+add the price of all toppings while calculating price of each pizza \
 """} ]  # accumulate messages
 
 
@@ -157,7 +165,7 @@ interactive_conversation = pn.bind(collect_messages, button_conversation)
 dashboard = pn.Column(
     inp,
     pn.Row(button_conversation),
-    pn.panel(interactive_conversation, loading_indicator=True, height=300),
+    pn.panel(interactive_conversation, loading_indicator=True),
 )
 
 dashboard
