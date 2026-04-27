@@ -185,11 +185,6 @@ response = get_completion_from_messages(messages, temperature=0)
 print(response)
 
 
-# ## Try experimenting on your own!
-# 
-# You can modify the menu or instructions to create your own orderbot!
-
-# In[ ]:
 
 
 

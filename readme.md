@@ -9,3 +9,6 @@ Summary
     c. Tranforming
     g. Expanding 
 4. Built a chatbot
+##############################
+I9: Using LangChain Expression Language (LCEL) pattern using the pipe operator | for flexible composition
+I10: In this role, the LLM answers questions about games while maintaining an engaging and immersive tone, enhancing the user experience.
