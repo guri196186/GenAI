@@ -15,7 +15,8 @@ def get_llm():
     llm = ChatOpenAI(
         model="gpt-3.5-turbo",
         temperature=0,
-        openai_api_key=os.environ['OPENAI_API_KEY']
+        openai_api_key=os.environ['OPENAI_API_KEY'],
+        verbose=True
     )
     return llm
 
@@ -71,4 +72,4 @@ rag_application = gr.Interface(
     description="Upload a PDF document and ask any question. The chatbot will try to answer using the provided document."
 )
 
-rag_application.launch(server_name="127.0.0.1", server_port=7860)
+rag_application.launch(server_name="127.0.0.1", server_port=7860, share=True)
