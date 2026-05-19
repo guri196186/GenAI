@@ -261,6 +261,9 @@ print("Log:\n", action.log.strip())
 
 from langchain.agents import AgentExecutor
 
+#The AgentExecutor operates in a continuous loop to solve complex tasks 
+# that a single LLM response cannot handle
+
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True,handle_parsing_errors=True)
 agent_executor.agent.stream_runnable = False
 
