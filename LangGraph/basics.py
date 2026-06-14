@@ -1,16 +1,4 @@
-import os
 from langgraph.graph import StateGraph
-from langchain_openai import ChatOpenAI
-from dotenv import load_dotenv, find_dotenv
-
-_ = load_dotenv(find_dotenv()) # read local .env file
-
-llm = ChatOpenAI(
-    model="gpt-3.5-turbo",
-    temperature=0,
-    openai_api_key=os.environ['OPENAI_API_KEY']
-)
-
 from typing import TypedDict, Optional
 
 #States represent the current condition or context within a workflow
